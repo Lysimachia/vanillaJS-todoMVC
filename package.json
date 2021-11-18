@@ -1,0 +1,39 @@
+{
+    "name": "my-webpack-project",
+    "version": "1.0.0",
+    "main": "./index.js",
+    "scripts": {
+        "start": "webpack-dev-server",
+        "build": "webpack --mode=production --node-env=production",
+        "build:dev": "webpack --mode=development",
+        "build:prod": "webpack --mode=production --node-env=production",
+        "watch": "webpack --watch",
+        "serve": "webpack serve",
+        "build:sass": "sass src/sass:dist/css"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://Ji_Yeon@bitbucket.org/opossum2/tabling_test.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://bitbucket.org/opossum2/tabling_test/issues"
+    },
+    "homepage": "https://bitbucket.org/opossum2/tabling_test#readme",
+    "devDependencies": {
+        "@babel/core": "^7.16.0",
+        "@babel/preset-env": "^7.16.0",
+        "@webpack-cli/generators": "^2.4.1",
+        "babel-loader": "^8.2.3",
+        "css-loader": "^6.5.1",
+        "html-webpack-plugin": "^5.5.0",
+        "mini-css-extract-plugin": "^2.4.5",
+        "prettier": "^2.4.1",
+        "sass": "^1.43.4",
+        "sass-loader": "^12.3.0",
+        "webpack": "^5.64.1",
+        "webpack-cli": "^4.9.1",
+        "webpack-dev-server": "^4.5.0"
+    }
+}
