@@ -1,55 +1,67 @@
-const API_URL = 'http://3.35.25.199/'
+const API_URL = "http://3.35.25.199/";
 
 const RESERVATIONS = {
-    id: '',
-    status: '',
-    timeReserved: '',
-    timeRegistered: '',
-    customer: {},
-    tables: [],
-    menus: []
-}
+  id: "",
+  status: "",
+  timeReserved: "",
+  timeRegistered: "",
+  customer: {},
+  tables: [],
+  menus: [],
+};
 
-const getReservationList = async() => {
-    const GET_RESERVATION_URL = 'v1/store/9533/reservations'
-    const response = await fetch(API_URL + GET_RESERVATION_URL)
-    if (!response.ok) {
-        throw new Error(response.statusText)
-    }
-    const reservationList = response.json()
-    return reservationList
-}
+const getReservationList = async () => {
+  const GET_RESERVATION_URL = "v1/store/9533/reservations";
+  const response = await fetch(API_URL + GET_RESERVATION_URL);
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
+  const reservationList = response.json();
+  return reservationList;
+};
 
 export default class ReserveList extends HTMLElement {
-    constructor() {
-        super();
-    }
-    render() {
-        window.requestAnimationFrame(async() => {
-            const reservationList = await getReservationList();
-            const div = document.createElement('div')
-            const title = document.createElement('h1')
-            const ul = document.createElement('ul')
-            title.textContent = '예약 목록'
-            this.appendChild(div)
-            div.appendChild(title)
-            div.appendChild(ul)
+  constructor() {
+    super();
+  }
+  render() {
+    window.requestAnimationFrame(async () => {
+      const reservationList = await getReservationList();
+      const div = document.createElement("div");
+      const title = document.createElement("h1");
+      const ul = document.createElement("ul");
+      title.textContent = "예약 목록";
+      this.appendChild(div);
+      div.appendChild(title);
+      div.appendChild(ul);
 
-            const reservations = reservationList.reservations
-            reservations.forEach(el => {
-                const li = document.createElement('li')
-                li.innerText = el.status
-                ul.appendChild(li)
-            })
+      const reservations = reservationList.reservations;
+      reservations.forEach((reservation) => {
+        const item = JSON.parse(JSON.stringify(reservation));
+        const customer = JSON.parse(JSON.stringify(item.customer));
 
+        const li = document.createElement("li");
+        const itemWrapper = document.createElement("div");
+        const col1 = document.createElement("div");
+        const col2 = document.createElement("div");
+        const col3 = document.createElement("div");
+        const button = document.createElement("button");
+        button.textContent = item.status === "seated" ? "취소" : "예약";
 
+        col1.textContent = item.status;
+        col2.textContent = customer.name;
+        col3.appendChild(button);
 
-        })
-    }
+        ul.appendChild(li);
+        li.appendChild(itemWrapper);
+        itemWrapper.appendChild(col1);
+        itemWrapper.appendChild(col2);
+        itemWrapper.appendChild(col3);
+      });
+    });
+  }
 
-    connectedCallback() {
-        this.render()
-    }
-
-
+  connectedCallback() {
+    this.render();
+  }
 }
