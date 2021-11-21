@@ -1,25 +1,4 @@
-const API_URL = 'http://3.35.25.199/'
-
-const RESERVATIONS = {
-    id: '',
-    status: '',
-    timeReserved: '',
-    timeRegistered: '',
-    customer: {},
-    tables: [],
-    menus: []
-}
-
-const getReservationList = async() => {
-    const GET_RESERVATION_URL = 'v1/store/9533/reservations'
-    const response = await fetch(API_URL + GET_RESERVATION_URL)
-    if (!response.ok) {
-        throw new Error(response.statusText)
-    }
-    const reservationList = response.json()
-    return reservationList
-}
-
+import getReservationList from "../../api";
 export default class ReserveList extends HTMLElement {
     constructor() {
         super();
