@@ -14,6 +14,8 @@ listTemplate.innerHTML = `
       display: flex;
       justify-content: flex-start;
       align-items: stretch;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     #col-time-status, #col-status-btn {
       width: 8ch;

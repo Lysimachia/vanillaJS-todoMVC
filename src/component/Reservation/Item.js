@@ -1,48 +1,45 @@
-let itemTemplate = document.createElement('template');
-itemTemplate.innerHTML = `
-  <li id="reservation-item">
-    <div class="col" id="col-time-status">
-        <div name="timeReserved"></div>
-        <div name="status"></div>
-    </div>
-    <div class="col" id="col-customer-menues">
-      <ul id="list-customer-menues">
-        <li>
-          <span name="customer-name"></span>
-          -
-          <span name="tables-name"></span>
-        </li>
-        <li></li>
-        <li></li>
-      </ul>
-    </div>
-    <div class="col" id="col-status-btn">
-      <button type="button" id="status-btn">버튼</button>
-    </div>
-  </li>`
-
+import { getTimeFormat } from '../../util';
 export default class Item extends HTMLElement {
     constructor() {
         super();
     }
     getReservationItem(reservation) {
-        const {
-            tables
-        } = reservation;
-        const {
-            customer
-        } = reservation;
-        let content = itemTemplate.content.querySelectorAll('[name]');
-        content.forEach(el => {
-            const name = el.getAttribute('name');
-            if (name.includes('table')) {
-                el.textContent = tables.map(table => table.name)
-            } else if (name.includes('customer')) {
-                el.textContent = customer['name']
-            } else {
-                el.textContent = reservation[name];
-            }
-        });
+            let itemTemplate = document.createElement('template');
+            if (reservation.status !== 'done') {
+                const { tables } = reservation;
+                const { customer } = reservation;
+                const { menus } = reservation;
+                const { id, status, timeReserved, timeRegistered } = reservation;
+
+                itemTemplate.innerHTML = `
+                    <li id="reservation-item">
+                      <div class="col">
+                          <div>${getTimeFormat(timeReserved)}</div>
+                          <div>${status === 'reserved' ? '예약' : '착석중'}</div>
+                      </div>
+                      <div class="col">
+                        <ul>
+                          <li>
+                            <span>${customer['name']}</span>
+                            -
+                            <span>${tables.map(table => table.name).join(', ')}</span>
+                          </li>
+                          <li>
+                            성인&nbsp;<span>${customer['adult']}</span>
+                            아이&nbsp;<span>${customer['child']}</span>
+                          </li>
+                          <li>
+                            <span>
+                              ${menus.map(menu => `${menu.name}(${menu.qty})`).join(', ')}
+                            <span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col">
+                        <button type="button" id="status-btn">${status === 'reserved' ? '착석' : '퇴석'}</button>
+                      </div>
+                    </li>`
+        }
         return itemTemplate.content.cloneNode(true);
     }
 }
