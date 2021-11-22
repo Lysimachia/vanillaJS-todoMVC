@@ -1,4 +1,6 @@
 import getReservationList from "../../api";
+import Item from './Item'
+import { cloneDeep } from '../../util'
 
 let listTemplate = document.createElement('template');
 listTemplate.innerHTML = `
@@ -10,15 +12,19 @@ listTemplate.innerHTML = `
     }
     #reservation-item {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
+      align-items: stretch;
     }
     #col-time-status, #col-status-btn {
-      min-width: 8ch;
+      width: 8ch;
+      text-overflow: eclipse;
+      text-align: center;
+      margin: auto;
     }
     #col-customer-menues {
-      flex: auto;
+      flex: 1;
+      min-width: 30ch;
     }
-    
   </style>
   <article>
     <h1 class="title">예약 목록</h1>
@@ -29,20 +35,6 @@ listTemplate.innerHTML = `
       <reservation-detail/>
     </section>
   </article>
-`
-let itemTemplate = document.createElement('template');
-itemTemplate.innerHTML = `
-  <li id="reservation-item">
-    <div class="col" id="col-time-status">
-    </div>
-    <div class="col" id="col-customer-menues">
-      <ul id="list-customer-menues">
-      </ul>
-    </div>
-    <div class="col" id="col-status-btn">
-      <button type="button" id="status-btn">버튼</button>
-    </div>
-  </li>
 `
 export default class ReservationList extends HTMLElement {
     constructor() {
@@ -57,35 +49,11 @@ export default class ReservationList extends HTMLElement {
             fragment.appendChild(listTemplate.content.cloneNode(true));
             this.appendChild(fragment);
 
-            const list = document.getElementById('reservation-list')
+            const list = document.getElementById('reservation-list');
 
-            reservations.forEach(el => {
-                // console.table(el.customer);
-                // console.dir(el.tables);
-                // console.table(el.menus);
-
-                const item = itemTemplate.content.cloneNode(true);
-                const itemId = item.getElementById('reservation-item');
-                itemId.setAttribute("data-id", el.id);
-
-                const col_1 = item.getElementById('col-time-status');
-                col_1.innerHTML = `
-                <div>
-                  ${new Date(el.timeReserved).getHours()}:${new Date(el.timeReserved).getMinutes() < 10 ? '0'+new Date(el.timeReserved).getMinutes() : new Date(el.timeReserved).getMinutes()}
-                </div>
-                <div>
-                  ${el.status}
-                </div>
-                `;
-
-                const col_2 = item.getElementById('list-customer-menues');
-                col_2.innerHTML = `
-                  <li>${el.customer.name}-${el.tables.map(el => el.name)}</li>
-                  <li>성인 ${el.customer.adult} 아이 ${el.customer.child}</li>
-                  <li>${el.menus.map(el => el.name)}(${el.menus.map(el => el.qty)})</li>
-                `;
-
-                list.appendChild(item);
+            reservations.forEach(reservation => {
+                let item = new Item();
+                list.appendChild(item.getReservationItem(reservation));
             })
         });
     }
