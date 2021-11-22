@@ -1,5 +1,6 @@
 import getReservationList from "../../api";
 import Item from './Item'
+import Detail from './Detail'
 import { cloneDeep } from '../../util'
 
 let listTemplate = document.createElement('template');
@@ -34,7 +35,8 @@ listTemplate.innerHTML = `
       <ul id="reservation-list"></ul>
     </section>
     <section>
-      <reservation-detail/>
+      <section class="reservation-detail">
+      </section>
     </section>
   </article>
 `
@@ -52,11 +54,14 @@ export default class ReservationList extends HTMLElement {
             this.appendChild(fragment);
 
             const list = document.getElementById('reservation-list');
+            const detail = document.getElementById('reservation-detail');
+            const listItem = new Item();
+            const detailItem = new Detail();
 
             reservations.forEach(reservation => {
-                let item = new Item();
-                list.appendChild(item.getReservationItem(reservation));
+                list.appendChild(listItem.getReservationItem(reservation));
             })
+
         });
     }
 

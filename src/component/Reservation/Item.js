@@ -12,7 +12,7 @@ export default class Item extends HTMLElement {
                 const { id, status, timeReserved, timeRegistered } = reservation;
 
                 itemTemplate.innerHTML = `
-                    <li id="reservation-item">
+                    <li id="reservation-item" data-id="${id}}">
                       <div class="col">
                           <div>${getTimeFormat(timeReserved)}</div>
                           <div>${status === 'reserved' ? '예약' : '착석중'}</div>
@@ -36,7 +36,7 @@ export default class Item extends HTMLElement {
                         </ul>
                       </div>
                       <div class="col">
-                        <button type="button" id="status-btn">${status === 'reserved' ? '착석' : '퇴석'}</button>
+                        <button type="button" class="status-btn ${status}">${status === 'reserved' ? '착석' : '퇴석'}</button>
                       </div>
                     </li>`
         }
