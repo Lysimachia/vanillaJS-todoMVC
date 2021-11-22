@@ -34,9 +34,7 @@ listTemplate.innerHTML = `
     <section class="reservation-list-wrapper">
       <ul id="reservation-list"></ul>
     </section>
-    <section>
-      <section class="reservation-detail">
-      </section>
+    <section id="reservation-detail">
     </section>
   </article>
 `
@@ -48,6 +46,10 @@ export default class ReservationList extends HTMLElement {
         window.requestAnimationFrame(async() => {
             const { reservations } = await getReservationList();
             console.table(reservations);
+
+            let currentItemId = reservations[0].id;
+            let currentItem = reservations.filter(reservation => reservation.id == currentItemId);
+            console.log(currentItem);
 
             const fragment = document.createDocumentFragment();
             fragment.appendChild(listTemplate.content.cloneNode(true));
@@ -61,6 +63,7 @@ export default class ReservationList extends HTMLElement {
             reservations.forEach(reservation => {
                 list.appendChild(listItem.getReservationItem(reservation));
             })
+            detail.appendChild(detailItem.getItemDetail(currentItem));
 
         });
     }

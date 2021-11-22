@@ -19,6 +19,7 @@ const config = {
     plugins: [
         new HtmlWebpackPlugin({
             template: "index.html",
+            favicon: "favicon.ico"
         }),
         new MiniCssExtractPlugin({ filename: 'style.css' })
     ],
@@ -33,7 +34,7 @@ const config = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
+                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif|ico)$/i,
                 type: "asset",
             },
         ],
