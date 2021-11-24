@@ -41,30 +41,48 @@ listTemplate.innerHTML = `
 export default class ReservationList extends HTMLElement {
     constructor() {
         super();
+        this.reservations;
+        this.currentItemId = null;
     }
+
+    setDetail(id) {
+        if (!id) {
+            return;
+        }
+        let currentItemId = id;
+        let currentItem = this.reservations.filter(reservation => reservation.id == currentItemId);
+        const detail = document.getElementById('reservation-detail');
+        detail.innerHTML = '';
+        const detailItem = new Detail();
+        detail.appendChild(detailItem.getItemDetail(currentItem));
+    }
+
+    setDetailEvent() {
+        const items = this.querySelectorAll('.reservation-item');
+        items.forEach(item => item.addEventListener('click', e => this.setDetail(e.currentTarget.dataset.id)))
+    }
+
+    async getReservations() {
+        const { reservations } = await getReservationList();
+        return reservations;
+    }
+
     render() {
         window.requestAnimationFrame(async() => {
-            const { reservations } = await getReservationList();
-            console.table(reservations);
-
-            let currentItemId = reservations[0].id;
-            let currentItem = reservations.filter(reservation => reservation.id == currentItemId);
-            console.log(currentItem);
+            this.reservations = await this.getReservations();
 
             const fragment = document.createDocumentFragment();
             fragment.appendChild(listTemplate.content.cloneNode(true));
             this.appendChild(fragment);
 
             const list = document.getElementById('reservation-list');
-            const detail = document.getElementById('reservation-detail');
             const listItem = new Item();
-            const detailItem = new Detail();
 
-            reservations.forEach(reservation => {
+            this.reservations.forEach(reservation => {
                 list.appendChild(listItem.getReservationItem(reservation));
             })
-            detail.appendChild(detailItem.getItemDetail(currentItem));
-
+            this.setDetail(this.currentItemId);
+            this.setDetailEvent();
         });
     }
 

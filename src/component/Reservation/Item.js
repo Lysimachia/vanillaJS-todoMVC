@@ -12,7 +12,7 @@ export default class Item extends HTMLElement {
                 const { id, status, timeReserved, timeRegistered } = reservation;
 
                 itemTemplate.innerHTML = `
-                    <li id="reservation-item" data-id="${id}}">
+                    <li class="reservation-item" data-id="${id}">
                       <div class="col">
                           <div>${getTimeFormat(timeReserved)}</div>
                           <div>${status === 'reserved' ? '예약' : '착석중'}</div>
