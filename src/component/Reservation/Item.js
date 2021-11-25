@@ -12,7 +12,36 @@ export default class Item extends HTMLElement {
                 const { id, status, timeReserved, timeRegistered } = reservation;
 
                 itemTemplate.innerHTML = `
-                    <li class="reservation-item" data-id="${id}">
+                    <style>
+                      .col:not(:nth-child(2)) {
+                        flex: 5rem 0 0;
+                        text-align: center;
+                      }
+                      .col{
+                        flex: auto;
+                      }
+                      .status-btn.reserved{
+                        width: 100%;
+                        background-color: #162149;
+                        color: #FFFFFF;
+                        padding: 0.5rem 1.6rem;
+                        white-space: nowrap;
+                        border-radius: 0.5rem;
+                        border: #162149;
+                      }
+                      .status-btn.seated{
+                        width: 100%;
+                        border-color: #162149;
+                        border-radius: 0.5rem;
+                        color: #162149;
+                        background: none;
+                        padding: 0.5rem 1.6rem;
+                        white-space: nowrap;
+                      }
+                   
+
+                    </style>
+                    <li class="reservation-item" data-id="${id}" data-status="${status}">
                       <div class="col">
                           <div>${getTimeFormat(timeReserved)}</div>
                           <div>${status === 'reserved' ? '예약' : '착석중'}</div>

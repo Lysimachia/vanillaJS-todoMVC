@@ -1,24 +1,16 @@
 import { getTimeFormat } from '../../util';
+
 export default class Detail extends HTMLElement {
     constructor() {
         super();
     }
-    getItemDetail([currentItem]) {
+    getItemDetail(currentItem) {
         let detailTemplate = document.createElement('template');
         const { customer } = currentItem;
         const { id, status, timeReserved, timeRegistered } = currentItem;
         detailTemplate.innerHTML = `
             <style>
-              ul {
-                white-space: nowrap;
-              }
-              textarea {
-                resize: none;
-                border: none;
-                width: 100%;
-                outline: none;
-                
-              }
+     
             </style>
             <section class="reservation-info">
               <h2>예약 정보</h2>
@@ -27,8 +19,10 @@ export default class Detail extends HTMLElement {
                     <span>예약 상태</span>
                     <span>${status === 'reserved' ? '예약' : '착석중'}</span>
                   </li>
+                  <li>
                     <span>예약 시간</span>
                     <span>${getTimeFormat(timeReserved)}</span>
+                  </li>
                   <li>
                     <span>접수 시간</span>
                     <span>${getTimeFormat(timeRegistered)}</span>
