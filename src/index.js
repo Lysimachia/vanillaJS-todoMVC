@@ -1,7 +1,15 @@
-import ReservationList from './component/Reservation/List'
-import ReservationItem from './component/Reservation/Item'
-import ReservationDetail from './component/Reservation/Detail'
+import getTodos from './getTodos.js'
+import view from './view.js'
+import './style.css'
 
-window.customElements.define('reservation-item', ReservationItem);
-window.customElements.define('reservation-list', ReservationList);
-window.customElements.define('reservation-detail', ReservationDetail);
+const state = {
+  todos: getTodos(),
+  currentFilter: 'All'
+}
+
+const main = document.querySelector('.todoapp')
+
+window.requestAnimationFrame(() => {
+  const newMain = view(main, state)
+  main.replaceWith(newMain)
+})

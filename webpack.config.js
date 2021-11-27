@@ -15,11 +15,11 @@ const config = {
     devServer: {
         open: true,
         host: "localhost",
+        allowedHosts: "all"
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: "index.html",
-            favicon: "favicon.ico"
         }),
         new MiniCssExtractPlugin({ filename: 'style.css' })
     ],
@@ -29,8 +29,8 @@ const config = {
                 loader: "babel-loader",
             },
             {
-                test: /\.s[ac]ss$/i,
-                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+                test: /\.css$/i,
+                use: ['style-loader', 'css-loader'],
                 exclude: /node_modules/
             },
             {
