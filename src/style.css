@@ -1,3 +1,120 @@
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    --box-shadow: 0 1px 1px hsl(0deg 0% 0% / 0.075), 0 2px 2px hsl(0deg 0% 0% / 0.075), 0 4px 4px hsl(0deg 0% 0% / 0.075), 0 8px 8px hsl(0deg 0% 0% / 0.075), 0 16px 16px hsl(0deg 0% 0% / 0.075);
+}
+
 body {
-  font-family: 'Noto Sans KR', sans-serif;
+    background-color: #F5F5F5;
+    text-align: center;
+}
+
+.todoapp {
+    width: 50ch;
+    margin: auto;
+    box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%), 0 25px 50px 0 rgb(0 0 0 / 10%);
+    ;
+}
+
+.header {
+    color: #EAD7D7;
+    font-size: 3.5rem;
+    width: 100%;
+}
+
+.toggle-all+label {
+    display: none;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+ul {
+    list-style: none;
+    background-color: #FFFFFF;
+}
+
+.view label::before {
+    left: 0;
+    content: " ";
+    border: 1px solid #E6E6E6;
+    border-radius: 50%;
+    width: 2.5ch;
+    height: 2.5ch;
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    margin: 0 1rem;
+}
+
+input,
+.view {
+    border: solid 1px #E9E9E9;
+    outline: none;
+    font-size: 1.25rem;
+    padding: 1rem 0.5rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    color: #4D4D4D;
+}
+
+input.edit {
+    display: none;
+}
+
+input.new-todo {
+    width: -webkit-fill-available;
+}
+
+ul.todo-list {
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--box-shadow);
+}
+
+footer a {
+    text-decoration: none;
+    color: inherit;
+}
+
+footer.footer {
+    display: flex;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    padding: 1rem 0.5rem;
+    font-size: 0.8rem;
+    align-items: center;
+    color: #777777;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 20%), 0 8px 0 -3px #f6f6f6, 0 9px 1px -3px rgb(0 0 0 / 20%), 0 16px 0 -6px #f6f6f6, 0 17px 2px -6px rgb(0 0 0 / 20%);
+}
+
+.todo-count {
+    padding: 1rem;
+}
+
+.filters {
+    display: inline-flex;
+    padding: 1rem;
+}
+
+.filters li {
+    margin-right: 0.5rem;
+}
+
+.clear-completed {
+    visibility: hidden;
+}
+
+footer.info {
+    margin: 3rem;
+    color: #BFBFBF;
+    font-size: 0.7em;
+}
+
+footer.info p {
+    margin: 0.5rem
 }

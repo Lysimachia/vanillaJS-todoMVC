@@ -1,10 +1,10 @@
 const getTodoElement = todo => {
-  const {
-    text,
-    completed
-  } = todo
+    const {
+        text,
+        completed
+    } = todo
 
-  return `
+    return `
   <li ${completed ? 'class="completed"' : ''}>
     <div class="view">
       <input 
@@ -19,41 +19,41 @@ const getTodoElement = todo => {
 }
 
 const getTodoCount = todos => {
-  const notCompleted = todos
-    .filter(todo => !todo.completed)
+    const notCompleted = todos
+        .filter(todo => !todo.completed)
 
-  const { length } = notCompleted
-  if (length === 1) {
-    return '1 Item left'
-  }
+    const { length } = notCompleted
+    if (length === 1) {
+        return '1 Item left'
+    }
 
-  return `${length} Items left`
+    return `${length} Items left`
 }
 
 export default (targetElement, state) => {
-  const {
-    currentFilter,
-    todos
-  } = state
+    const {
+        currentFilter,
+        todos
+    } = state
 
-  const element = targetElement.cloneNode(true)
+    const element = targetElement.cloneNode(true)
 
-  const list = element.querySelector('.todo-list')
-  const counter = element.querySelector('.todo-count')
-  const filters = element.querySelector('.filters')
+    const list = element.querySelector('.todo-list')
+    const counter = element.querySelector('.todo-count')
+    const filters = element.querySelector('.filters')
 
-  list.innerHTML = todos.map(getTodoElement).join('')
-  counter.textContent = getTodoCount(todos)
+    list.innerHTML = todos.map(getTodoElement).join('')
+    counter.textContent = getTodoCount(todos)
 
-  Array
-    .from(filters.querySelectorAll('li a'))
-    .forEach(a => {
-      if (a.textContent === currentFilter) {
-        a.classList.add('selected')
-      } else {
-        a.classList.remove('selected')
-      }
-    })
+    Array
+        .from(filters.querySelectorAll('li a'))
+        .forEach(a => {
+            if (a.textContent === currentFilter) {
+                a.classList.add('selected')
+            } else {
+                a.classList.remove('selected')
+            }
+        })
 
-  return element
+    return element
 }
