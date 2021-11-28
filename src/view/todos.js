@@ -14,7 +14,8 @@ const getTodoElement = todo => {
   <button class="destroy"></button>
 </div>
 <input class="edit" value="${text}">
-</li>`
+</li>
+`
 }
 
 export default (targetElement, { todos }) => {
